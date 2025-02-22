@@ -11,3 +11,12 @@ trainIndex <- createDataPartition(bp_data$systolic_bp, p=0.8, list = FALSE)
 
 training_data <- bp_data[trainIndex, ]
 test_data <- bp_data[-trainIndex, ]
+
+# Training our models
+# First model with just age as a feature
+train_control <- trainControl(method = "none")
+lm_model <- train(systolic_bp ~ age,
+                  data = training_data,
+                  method = "lm",
+                  trControl = train_control)
+predictions <- predict(lm_model, newdata = test_data)
