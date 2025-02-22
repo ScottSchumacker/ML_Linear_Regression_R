@@ -20,3 +20,14 @@ lm_model <- train(systolic_bp ~ age,
                   method = "lm",
                   trControl = train_control)
 predictions <- predict(lm_model, newdata = test_data)
+
+# Second model with both age and cholesterol as features
+lm_model2 <- train(systolic_bp ~ age + cholesterol,
+                   data = training_data,
+                   method = "lm",
+                   trControl = train_control)
+predictions2 <- predict(lm_model2, newdata = test_data)
+
+# Evaluating model performance
+postResample(predictions, test_data$systolic_bp)
+postResample(predictions2, test_data$systolic_bp)
