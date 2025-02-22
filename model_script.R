@@ -1,5 +1,5 @@
 # Scott Schumacker
-# Model Creation
+# Model Creation and Evaluation
 
 # Loading packages
 library(caret)
