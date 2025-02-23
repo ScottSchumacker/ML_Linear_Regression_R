@@ -28,6 +28,10 @@ lm_model2 <- train(systolic_bp ~ age + cholesterol,
                    trControl = train_control)
 predictions2 <- predict(lm_model2, newdata = test_data)
 
+# Evaluating linear model summary statistics
+summary(lm_model)
+summary(lm_model2)
+
 # Evaluating model performance
 postResample(predictions, test_data$systolic_bp)
 postResample(predictions2, test_data$systolic_bp)
