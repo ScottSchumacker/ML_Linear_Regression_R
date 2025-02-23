@@ -47,6 +47,7 @@ bp_data <- data.frame(age = age, cholesterol = cholesterol, systolic_bp = systol
 
 ***Visualizing relationships in the data set***
 <br>
+
 ```{r}
 # Visualizing the relationship between features of the data set
 P1 <- ggplot(bp_data, aes(age, systolic_bp)) +
@@ -63,3 +64,54 @@ P2 <- ggplot(bp_data, aes(cholesterol, systolic_bp)) +
 
 gridExtra::grid.arrange(P1,P2, nrow = 1)
 ```
+<br>
+There appears to be a positive correlation between age and systolic blood pressure as well as cholesterol and systolic blood pressure.
+
+***Splitting data set into training and testing data***
+<br>
+
+```{r}
+# Split the data set into test and train data
+trainIndex <- createDataPartition(bp_data$systolic_bp, p=0.8, list = FALSE)
+
+training_data <- bp_data[trainIndex, ]
+test_data <- bp_data[-trainIndex, ]
+```
+
+***Fitting and training two linear regression models***
+<br>
+
+```{r}
+# Training our models
+# First model with just age as a feature
+train_control <- trainControl(method = "none")
+lm_model <- train(systolic_bp ~ age,
+                  data = training_data,
+                  method = "lm",
+                  trControl = train_control)
+predictions <- predict(lm_model, newdata = test_data)
+
+# Second model with both age and cholesterol as features
+lm_model2 <- train(systolic_bp ~ age + cholesterol,
+                   data = training_data,
+                   method = "lm",
+                   trControl = train_control)
+predictions2 <- predict(lm_model2, newdata = test_data)
+```
+
+***Evaluating trained model summary statistics***
+<br>
+```{r}
+summary(lm_model)
+summary(lm_model2)
+```
+The model output shows us that both models are statistically significant and both models have statistically significant features. In addition, we can see that the second model has a higher adjusted R-squared value indicating that both age and cholesterol together explain 37% of the variation in systolic blood pressure.
+
+***Comparing model performance***
+<br>
+```{r}
+# Evaluating model performance
+postResample(predictions, test_data$systolic_bp)
+postResample(predictions2, test_data$systolic_bp)
+```
+When looking at model performance of how well each model predicts the known systolic blood pressure, the second model performance better with a lower Root Mean Square Error (RMSE) of _9.48_ and lower Mean Absolute Error (MAE) of _7.83_
