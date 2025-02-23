@@ -6,6 +6,8 @@ library(caret)
 library(ggplot2)
 library(dplyr)
 
+set.seed(13)
+
 # Creating data set
 # Creating patients
 n <- 100

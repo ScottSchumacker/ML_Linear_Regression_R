@@ -6,6 +6,8 @@ library(caret)
 library(ggplot2)
 library(dplyr)
 
+set.seed(13)
+
 # Split the data set into test and train data
 trainIndex <- createDataPartition(bp_data$systolic_bp, p=0.8, list = FALSE)
 
