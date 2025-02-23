@@ -5,8 +5,25 @@
 library(caret)
 library(ggplot2)
 library(dplyr)
+library(gridExtra)
 
+# Setting the seed so that the results are reproducible
 set.seed(13)
+
+# Visualizing the relationship between features of the data set
+P1 <- ggplot(bp_data, aes(age, systolic_bp)) +
+  geom_point() +
+  theme_classic() +
+  xlab("Age") +
+  ylab("Systolic Blood Pressure")
+
+P2 <- ggplot(bp_data, aes(cholesterol, systolic_bp)) +
+  geom_point() +
+  theme_classic() +
+  xlab("Cholesterol") +
+  ylab("Systolic Blood Pressure")
+
+gridExtra::grid.arrange(P1,P2, nrow = 1)
 
 # Split the data set into test and train data
 trainIndex <- createDataPartition(bp_data$systolic_bp, p=0.8, list = FALSE)

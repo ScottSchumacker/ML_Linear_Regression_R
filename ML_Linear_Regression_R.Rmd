@@ -16,7 +16,12 @@ library(dplyr)
 
 ***Creating data set***
 <br>
+For this example machine learning linear regression model, we will be creating a data set around blood pressure, age, and cholesterol:
+<br>
 ```{r}
+# Setting the seed so that results are reproducible
+set.seed(13)
+
 # Creating data set
 # Creating patients
 n <- 100
@@ -38,4 +43,23 @@ systolic_bp <- intercept + age_coef * age + cholesterol_coef * cholesterol + err
 
 # Creating data frame
 bp_data <- data.frame(age = age, cholesterol = cholesterol, systolic_bp = systolic_bp)
+```
+
+***Visualizing relationships in the data set***
+<br>
+```{r}
+# Visualizing the relationship between features of the data set
+P1 <- ggplot(bp_data, aes(age, systolic_bp)) +
+  geom_point() +
+  theme_classic() +
+  xlab("Age") +
+  ylab("Systolic Blood Pressure")
+
+P2 <- ggplot(bp_data, aes(cholesterol, systolic_bp)) +
+  geom_point() +
+  theme_classic() +
+  xlab("Cholesterol") +
+  ylab("Systolic Blood Pressure")
+
+gridExtra::grid.arrange(P1,P2, nrow = 1)
 ```
